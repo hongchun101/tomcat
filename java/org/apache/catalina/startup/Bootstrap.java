@@ -251,8 +251,10 @@ public final class Bootstrap {
      */
     public void init() throws Exception {
 
+        // 初始化类加载器
         initClassLoaders();
 
+        // 设置上下文类加载器
         Thread.currentThread().setContextClassLoader(catalinaLoader);
 
         SecurityClassLoad.securityClassLoad(catalinaLoader);
@@ -444,6 +446,7 @@ public final class Bootstrap {
                 // Don't set daemon until init() has completed
                 Bootstrap bootstrap = new Bootstrap();
                 try {
+                    // 初始化bootstrap
                     bootstrap.init();
                 } catch (Throwable t) {
                     handleThrowable(t);
@@ -459,6 +462,7 @@ public final class Bootstrap {
             }
         }
 
+        // 处理启动参数
         try {
             String command = "start";
             if (args.length > 0) {
@@ -474,7 +478,9 @@ public final class Bootstrap {
                 daemon.stop();
             } else if (command.equals("start")) {
                 daemon.setAwait(true);
+                // 反射调用Catalina的load方法
                 daemon.load(args);
+                // 反射调用Catalina的start方法
                 daemon.start();
                 if (null == daemon.getServer()) {
                     System.exit(1);
