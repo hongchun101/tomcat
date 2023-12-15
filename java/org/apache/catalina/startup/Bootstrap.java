@@ -439,6 +439,7 @@ public final class Bootstrap {
      *
      * @param args Command line arguments to be processed
      */
+    // Tomcat启动方法
     public static void main(String args[]) {
 
         synchronized (daemonLock) {
@@ -446,7 +447,7 @@ public final class Bootstrap {
                 // Don't set daemon until init() has completed
                 Bootstrap bootstrap = new Bootstrap();
                 try {
-                    // 初始化bootstrap
+                    // 初始化ClassLoader 并用ClassLoader创建的Catalina实例赋给catalinaDeamon变量
                     bootstrap.init();
                 } catch (Throwable t) {
                     handleThrowable(t);
@@ -462,7 +463,6 @@ public final class Bootstrap {
             }
         }
 
-        // 处理启动参数
         try {
             String command = "start";
             if (args.length > 0) {

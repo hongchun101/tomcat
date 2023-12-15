@@ -807,7 +807,9 @@ public class Catalina {
             }
         }
 
+        // 根据await参数决定是否等待
         if (await) {
+            // 调用server的await方法
             await();
             stop();
         }
@@ -817,6 +819,7 @@ public class Catalina {
     /**
      * Stop an existing server instance.
      */
+    // 停止已经存在的server实例
     public void stop() {
 
         try {
